@@ -1,12 +1,20 @@
 import React from 'react';
 import TodosContainer from '../containers/TodosContainer';
 
-export default function TodosApp ({ todos }) {
-    return (
-        <div>
-            <h1>App</h1>
+export default class TodosApp extends React.Component {
+    componentDidMount() {
+        const { fetchTodos } = this.props;
 
-            <TodosContainer />
-        </div>
-    );
+        fetchTodos();
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>App</h1>
+
+                <TodosContainer />
+            </div>
+        );
+    }
 }

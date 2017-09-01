@@ -1,18 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 
-import TodosApp from './components/TodoApp';
+import TodosAppContainer from './containers/TodosAppContainer';
 
 import reducers from './reducers';
+import todosSaga from './sagas/todosSaga';
 
-const store = createStore(reducers);
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(
+    reducers,
+    applyMiddleware(sagaMiddleware)
+);
+
+sagaMiddleware.run(todosSaga);
 
 const render = () => {
     ReactDOM.render(
         <Provider store={store}>
-            <TodosApp />
+            <TodosAppContainer />
         </Provider>,
         document.getElementById('root')
     );
